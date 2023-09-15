@@ -29,8 +29,7 @@ export const apiPopulationGetRouteHandler = (request, response, db) => {
 export const apiPopulationPutRouteHandler = (request, response, db) => {
 
     const { state, city } = request.params
-    const indexState = state.toUpperCase()
-    const indexCity = city.toUpperCase()
+    const cityAndState = `${city.toUpperCase()}, ${state.toUpperCase()}`
     const population = parseInt(request.body)
 
     if (!Number.isInteger(population)) {
@@ -40,13 +39,11 @@ export const apiPopulationPutRouteHandler = (request, response, db) => {
     }
 
     db.update({
-        indexState,
-        indexCity,
+        cityAndState, 
     },
     {
         $set: {
-            indexState,
-            indexCity,
+            cityAndState,
             state,
             city,
             population,
