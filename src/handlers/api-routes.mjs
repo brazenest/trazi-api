@@ -3,7 +3,8 @@ import { DEFAULT_POPULATION_PROJECTION } from '../defaults.mjs'
 export const apiPopulationGetRouteHandler = (request, response, db) => {
 
     db.findOne({
-        cityAndState: `${request.params.city.toUpperCase()}, ${request.params.state.toUpperCase()}`,
+        indexState: request.params.state.toUpperCase(),
+        indexCity: request.params.city.toUpperCase(),
     },
     DEFAULT_POPULATION_PROJECTION,
     function dbPopulationGetRouteFindOneHandler(err, doc) {
@@ -29,7 +30,8 @@ export const apiPopulationGetRouteHandler = (request, response, db) => {
 export const apiPopulationPutRouteHandler = (request, response, db) => {
 
     const { state, city } = request.params
-    const cityAndState = `${city.toUpperCase()}, ${state.toUpperCase()}`
+    const indexState = state.toUpperCase()
+    const indexCity = city.toUpperCase()
     const population = parseInt(request.body)
 
     if (!Number.isInteger(population)) {
@@ -39,11 +41,13 @@ export const apiPopulationPutRouteHandler = (request, response, db) => {
     }
 
     db.update({
-        cityAndState, 
+        indexState,
+        indexCity,
     },
     {
         $set: {
-            cityAndState,
+            indexState,
+            indexCity,
             state,
             city,
             population,

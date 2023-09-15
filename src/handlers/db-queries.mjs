@@ -6,7 +6,8 @@ export const dbInitializationCountHandler = (err, count, db) => {
         dataAsJson.forEach(cityRecord => {
             const { state, city, population } = cityRecord
             db.insert({
-                cityAndState: `${city}, ${state}`.toUpperCase(),
+                indexState: (typeof state === 'string') ? state.toUpperCase() : state,
+                indexCity: (typeof city === 'string') ? city.toUpperCase() : city,
                 state,
                 city,
                 population,
@@ -15,7 +16,8 @@ export const dbInitializationCountHandler = (err, count, db) => {
             })
         })
         db.ensureIndex({
-            fieldName: 'cityAndState',
+            fieldName: ['state', 'city'],
+            strength: 2,
         })
     }
 }
