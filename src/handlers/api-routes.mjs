@@ -10,20 +10,18 @@ export const apiPopulationGetRouteHandler = (request, response, db) => {
         let payload
 
         if (err || !doc) {
-            response.statusCode = 400
+                response.writeHead(400, { 'Content-Type': 'application/json' })
             payload = {
                 status: 'error',
                 message: 'State / City combination cannot be found.',
             }
         } else {
-            response.statusCode = 200
+                response.writeHead(200, { 'Content-Type': 'application/json' })
             payload = doc
         }
         
-        response.send(payload)
-        return response
+            return response.end(JSON.stringify(payload))
     })
-    
 }
 
 export const apiPopulationPutRouteHandler = (request, response, db) => {

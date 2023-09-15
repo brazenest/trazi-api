@@ -1,12 +1,11 @@
-import app from './app.mjs'
-import { DEFAULT_SERVER_PORT } from './defaults.mjs'
+import http from 'http'
 
-const server = app()
+import router from './router.mjs'
 
-try {
-    await server.listen(DEFAULT_SERVER_PORT)
-    console.log(`Server listening on port ${DEFAULT_SERVER_PORT}`)
-} catch (err) {
-    server.log.error(err)
-    process.exit(1)
+export const build = ({ db }) => {
+    const server = http.createServer((request, response) => router(request, response, db))
+
+    return server
 }
+
+export default build
