@@ -1,11 +1,11 @@
-import { DEFAULT_POPULATION_PROJECTION } from '../defaults.mjs'
+import { DEFAULT_DB_POPULATION_PROJECTION } from '../defaults.mjs'
 
 export const apiPopulationGetRouteHandler = (request, response, db) => {
 
     db.findOne({
         cityAndState: `${request.params.city.toUpperCase()}, ${request.params.state.toUpperCase()}`,
     },
-    DEFAULT_POPULATION_PROJECTION,
+    DEFAULT_DB_POPULATION_PROJECTION,
     function dbPopulationGetRouteFindOneHandler(err, doc) {
         let payload
 
