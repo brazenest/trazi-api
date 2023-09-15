@@ -1,4 +1,4 @@
-import dataAsJson from '../../data/populations-reformatted.json' assert { type: 'json' }
+import dataAsJson from '../../data/populations.json' assert { type: 'json' }
 
 export const dbInitializationCountHandler = (err, count, db) => {
     if (count < 1) {
