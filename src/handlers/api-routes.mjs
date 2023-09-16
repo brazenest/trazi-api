@@ -31,9 +31,9 @@ export const apiPopulationPutRouteHandler = (request, response, db) => {
     const population = parseInt(request.body)
 
     if (!Number.isInteger(population)) {
-        response.statusCode = 400
-        response.send()
-        return response
+        response.writeHead(400)
+        const payload = { status: 'error', message: 'Population value is not a number.' }
+        return response.end(JSON.stringify(payload))
     }
 
     db.update({
@@ -53,15 +53,16 @@ export const apiPopulationPutRouteHandler = (request, response, db) => {
     function dbPopulationPutRouteUpdateHandler(err, numUpdated, updatedDoc, upsert) {
 
         if (err) {
-            response.statusCode = 400
+            const payload = { status: 'error', message: 'Error occurred while trying to complete this request.' }
+            response.writeHead(400)
+            return response.end(JSON.stringify(payload))
         } else if (!upsert) {
-            response.statusCode = 200
+            response.writeHead(200)
         } else {
-            response.statusCode = 201
+            response.writeHead(201)
         }
 
-        response.send()
-        return response
+        return response.end()
     })
 
 }
