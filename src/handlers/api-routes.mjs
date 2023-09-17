@@ -1,6 +1,6 @@
 import { DEFAULT_DB_POPULATION_PROJECTION } from '../defaults.mjs'
 
-export const apiPopulationGetRouteHandler = (request, response, db) => {
+export const apiPopulationGetRouteHandler = async (request, response, db) => {
 
     db.findOne({
         cityAndState: `${request.params.city.toUpperCase()}, ${request.params.state.toUpperCase()}`,
@@ -24,7 +24,7 @@ export const apiPopulationGetRouteHandler = (request, response, db) => {
     })
 }
 
-export const apiPopulationPutRouteHandler = (request, response, db) => {
+export const apiPopulationPutRouteHandler = async (request, response, db) => {
 
     const { state, city } = request.params
     const cityAndState = `${city.toUpperCase()}, ${state.toUpperCase()}`
