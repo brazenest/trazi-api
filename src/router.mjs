@@ -4,7 +4,9 @@ export const router = async (request, response, db) => {
     let params
 
 
-    if (populationRequestParams.match(/\/api\/population\/state\/([a-zA-Z]+)\/city\/([a-zA-Z]+)\/?/)) {
+    const populationRequestParams = request.url.match(/\/api\/population\/state\/([a-zA-Z]+)\/city\/([a-zA-Z]+)\/?/)
+
+    if (populationRequestParams) {
 
         request.params = {
             state: populationRequestParams[1],
